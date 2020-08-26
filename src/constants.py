@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 """
-@File    : const.py
+@File    : constants.py
 @Time    : 2020/7/31 12:06
 @Author  : blockish
 @Email   : blockish@yeah.net

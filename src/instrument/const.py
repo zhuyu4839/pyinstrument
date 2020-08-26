@@ -10,11 +10,13 @@ EMPTY = ''
 SPACE = ' '
 INTERROGATION = '?'
 
+BRACE = '{}'
+
 SEMICOLON = ';'
 COLON = ':'
 
 
-class Ieee488Const:
+class Ieee488Cmd:
 
     # 校准命令
     CAL = '*CAL'

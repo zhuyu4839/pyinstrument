@@ -9,8 +9,8 @@ from abc import ABC
 from instrument import Instrument
 from pyvisa.highlevel import ResourceManager
 
-from instrument.const import Ieee488Const, SPACE, INTERROGATION, EMPTY
-from errors import InstrumentException
+from instrument.const import Ieee488Cmd, SPACE, INTERROGATION, EMPTY
+from errors import InstrumentException, ResourceException
 
 
 class ScpiInstrument(Instrument, ABC):
@@ -44,23 +44,25 @@ class ScpiInstrument(Instrument, ABC):
         :param reopen: 是否重新打开, 由于visa仪器连接电脑时如果中间有断线现象则此时使用reopen为True
         :return: None
         """
-        if resource_name is None:
-            if self._resource_name is None:
-                raise InstrumentException('can\'t open a none resource name')
+        try:
+            if resource_name is None:
+                if self._resource_name is None:
+                    raise InstrumentException('can\'t open a none resource name')
+                resource_name = self._resource_name
             else:
-                visa_obj = self._rm.open_resource(self._resource_name)
-                return visa_obj
-        else:
-            if self._resource_name != resource_name:
-                self.close()
-                self.open(resource_name, False)
-            else:
-                if reopen is True:
-                    resource_name = self._resource_name
-                    self.close()
-                    self.open(resource_name, False)
+                if self._resource_name == resource_name:
+                    if reopen is True:
+                        self.close()
+                    else:
+                        return self._instrument
                 else:
-                    pass  # nothing to do
+                    self.close()
+            self._resource_name = resource_name
+            visa_obj = self._rm.open_resource(self._resource_name)
+            self._instrument = visa_obj
+            return self._instrument
+        except Exception as e:
+            raise ResourceException(e)
 
     def write(self, cmd, *args, **kwargs):
         """
@@ -116,14 +118,14 @@ class ScpiInstrument(Instrument, ABC):
         校准命令(IEEE488标准)
         :return: None
         """
-        self.write(Ieee488Const.CAL)
+        self.write(Ieee488Cmd.CAL)
 
     def cls(self):
         """
         清除状态寄存器
         :return: None
         """
-        self.write(Ieee488Const.CLS)
+        self.write(Ieee488Cmd.CLS)
 
     def ese(self, nrf: int = None):
         """
@@ -132,22 +134,22 @@ class ScpiInstrument(Instrument, ABC):
         :return: 事件状态使能(Standard Event Status Enable)寄存器
         """
         if nrf is not None:
-            self.write(Ieee488Const.ESE, SPACE, nrf)
-        return self.query(Ieee488Const.ESE, INTERROGATION, EMPTY)
+            self.write(Ieee488Cmd.ESE, SPACE, nrf)
+        return self.query(Ieee488Cmd.ESE, INTERROGATION, EMPTY)
 
     def esr(self):
         """
         查询读取标准状态寄存器并清除它
         :return: 标准状态寄存器内容
         """
-        return self.query(Ieee488Const.ESR)
+        return self.query(Ieee488Cmd.ESR)
 
     def idn(self):
         """
         获取仪器型号序列号等信息
         :return: 仪器型号序列号等信息
         """
-        return self.query(Ieee488Const.IDN)
+        return self.query(Ieee488Cmd.IDN)
 
     def opc(self, query: bool = False):
         """
@@ -157,16 +159,16 @@ class ScpiInstrument(Instrument, ABC):
         :return: 参见功能说明
         """
         if query is True:
-            return self.query(Ieee488Const.OPC, INTERROGATION)
+            return self.query(Ieee488Cmd.OPC, INTERROGATION)
         else:
-            self.write(Ieee488Const.OPC, EMPTY)
+            self.write(Ieee488Cmd.OPC, EMPTY)
 
     def opt(self):
         """
         查询当前(批)命令执行结果状态,  中间以分号(;)分割
         :return: 参见功能说明
         """
-        return self.query(Ieee488Const.OPT)
+        return self.query(Ieee488Cmd.OPT)
 
     def psc(self, on_off: str = None):
         """
@@ -180,8 +182,8 @@ class ScpiInstrument(Instrument, ABC):
         :return: 当前psc状态0或1
         """
         if on_off is not None:
-            self.write(Ieee488Const.PSC, SPACE, on_off)
-        return self.query(Ieee488Const, INTERROGATION, EMPTY)
+            self.write(Ieee488Cmd.PSC, SPACE, on_off)
+        return self.query(Ieee488Cmd, INTERROGATION, EMPTY)
 
     def rcl(self, nrf: int = 1):
         """
@@ -189,14 +191,14 @@ class ScpiInstrument(Instrument, ABC):
         :param nrf: 数字范围参考仪器手册
         :return: None
         """
-        self.write(Ieee488Const.RCL, nrf)
+        self.write(Ieee488Cmd.RCL, nrf)
 
     def rst(self):
         """
         出厂设置
         :return: None
         """
-        self.write(Ieee488Const.RST)
+        self.write(Ieee488Cmd.RST)
 
     def sav(self, nrf: int = 1):
         """
@@ -204,7 +206,7 @@ class ScpiInstrument(Instrument, ABC):
         :param nrf: 数字范围参考仪器手册
         :return: None
         """
-        self.write(Ieee488Const.SAV, nrf)
+        self.write(Ieee488Cmd.SAV, nrf)
 
     def sre(self, nrf: int = None):
         """
@@ -213,34 +215,34 @@ class ScpiInstrument(Instrument, ABC):
         :return: 服务请求使能寄存器状态
         """
         if nrf is not None:
-            self.write(Ieee488Const.SRE, SPACE, nrf)
-        return self.query(Ieee488Const.SRE, INTERROGATION, EMPTY)
+            self.write(Ieee488Cmd.SRE, SPACE, nrf)
+        return self.query(Ieee488Cmd.SRE, INTERROGATION, EMPTY)
 
     def stb(self):
         """
         查询状态寄存器值
         :return: 状态寄存器值
         """
-        return self.query(Ieee488Const.STB)
+        return self.query(Ieee488Cmd.STB)
 
     def trg(self):
         """
         发送一个触发信号, 触发信号内容根据仪器而定
         :return: None
         """
-        self.write(Ieee488Const.TRG)
+        self.write(Ieee488Cmd.TRG)
 
     def tst(self):
         """
         自检测试
         :return: 自检测试状态, 非0为不通过, 具体查看仪器定义
         """
-        return self.query(Ieee488Const.TST)
+        return self.query(Ieee488Cmd.TST)
 
     def wai(self):
         """
         发送等待命令, 直到命令完成, 否则不接受任何指令
         :return: None
         """
-        self.write(Ieee488Const.WAI)
+        self.write(Ieee488Cmd.WAI)
 

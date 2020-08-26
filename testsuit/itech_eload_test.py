@@ -8,12 +8,23 @@
 import time
 import unittest
 
-from instrument.eloads.itech import It8500, It8500Plus, CC, CONTINUOUS, MANUAL
+from instrument.eloads.itech import It8500PlusFrame, CC, CONTINUOUS, MANUAL
 
 
 class It8500PlusTest(unittest.TestCase):
+    """
+    实际使用示例代码:
+    with It8500PlusFrame('COM12') as dcload:
+        操作逻辑...
 
-    dcload = It8500Plus('COM12')
+    或者:
+    dcload = It8500PlusFrame('COM12')
+    dcload.initialize()
+    操作逻辑...
+    dcload.finalize()
+    """
+
+    dcload = It8500PlusFrame('COM12')
 
     @classmethod
     def setUpClass(cls):
@@ -24,6 +35,7 @@ class It8500PlusTest(unittest.TestCase):
         cls.dcload.remote('OFF')
         cls.dcload.close()
 
+    @unittest.skip('tested')
     def test_initial(self):
         self.dcload.initialize()
         self.assertTrue(self.dcload.info is not None)
@@ -35,7 +47,7 @@ class It8500PlusTest(unittest.TestCase):
 
     @unittest.skip('tested')
     def test_sn(self):
-        self.dcload.sn()
+        print(self.dcload.sn())
 
     @unittest.skip('tested')
     def test_load(self):

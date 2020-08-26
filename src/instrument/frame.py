@@ -10,7 +10,7 @@ from abc import ABC
 from typing import Union
 import serial.tools.list_ports
 
-from errors import ResourceException
+from errors import ResourceException, InstrumentException
 from instrument import Instrument
 
 
@@ -27,6 +27,7 @@ class FrameInstrument(Instrument, ABC):
         self._address = address
         self._instrument.baudrate = baudrate
         self._supported_baudrate = supported_baudrate
+        assert baudrate in supported_baudrate
         self._rw_delay = rw_delay
 
     @property
@@ -85,12 +86,10 @@ class FrameInstrument(Instrument, ABC):
         :param cmd: 命令数据
         :return: None
         """
-        if cmd is None:
-            self._logger.warning('write command is None')
-            return
-        self._logger.info("send: " + " ".join(["%02X" % i for i in cmd]))
-        self._instrument.write(bytearray(cmd))
-        # time.sleep(self._rw_delay[self._supported_baudrate.index(self._instrument.baudrate)])
+        if cmd is not None:
+            self._logger.info("send: " + " ".join(["%02X" % i for i in cmd]))
+            self._instrument.write(bytearray(cmd))
+            # time.sleep(self._rw_delay[self._supported_baudrate.index(self._instrument.baudrate)])
 
     def query(self, cmd, *args, **kwargs):
         """
@@ -98,28 +97,35 @@ class FrameInstrument(Instrument, ABC):
         :param cmd: 命令数据
         :return: 二进制数据list
         """
-        if cmd is None:
-            self._logger.warning('query command is None')
-            return
-        self.write(cmd)
-        return self.read()
+        if cmd is not None:
+            self.write(cmd)
+            return self.read()
 
-    def open(self, resource_name):
+    def open(self, resource_name: str, reopen: bool = False):
         """
         打开串口(帧协议)资源
         :param resource_name: 串口资源名称
+        :param reopen: 是否重新打开
         :return: None
         :raise ResourceException
         """
         try:
-            if self._resource_name is None:
-                self._resource_name = resource_name
-                serial_obj = serial.Serial(port=resource_name)
+            if resource_name is None:
+                if self._resource_name is None:
+                    raise InstrumentException('can\'t open a none resource name')
+                resource_name = self._resource_name
             else:
-                if resource_name != self._resource_name:
+                if self._resource_name == resource_name:
+                    if reopen is True:
+                        self.close()
+                    else:
+                        return self._instrument
+                else:
                     self.close()
-                    self.open(resource_name)
-            return serial_obj
+            self._resource_name = resource_name
+            serial_obj = serial.Serial(port=resource_name)
+            self._instrument = serial_obj
+            return self._instrument
         except Exception as e:
             raise ResourceException(e)
 

@@ -7,7 +7,6 @@
 """
 __all__ = {
     'Instrument',
-    'Ieee488'
 }
 
 import traceback
@@ -196,9 +195,9 @@ class Instrument(Object, Ieee488, ABC):
     def query(self, cmd, *args, **kwargs):
         pass
 
-    @abstractmethod
+    # @abstractmethod
     def remote(self, on_off):
-        pass
+        warnings.warn('%s can\'t support "remote" method' % self.__class__)
 
     @abstractmethod
     def open(self, resource_name: str = None, reopen: bool = False):

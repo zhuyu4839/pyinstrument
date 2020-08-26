@@ -1,6 +1,8 @@
 import re
+import time
 
 from errors import ParamException
+from instrument.const import SEMICOLON
 
 BIG_ENDIAN = 'big'
 LITTLE_ENDIAN = 'little'
@@ -86,6 +88,34 @@ def raiser(e):
     :return: None
     """
     raise e
+
+
+def contact_spci_cmd(cmd1, cmd2, *args, **kwargs):
+    if cmd2 is None:
+        return cmd1
+    if cmd1 is None:
+        return cmd2.format(*args, **kwargs)
+    cmd1 += SEMICOLON + cmd2.format(*args, **kwargs)
+    return cmd1
+
+
+def set_query(obj, set_dict, get_dict, *names, **values):
+    """
+    set and query
+    """
+    write_cmd = None
+    for key, value in values.items():
+        # if len(names) == 0:
+        #     query_cmd = contact_spci_cmd(query_cmd, get_dict.get(key))
+        write_cmd = contact_spci_cmd(write_cmd, set_dict.get(key), value)
+
+    obj.write(write_cmd)
+    time.sleep(0.1)
+
+    query_cmd = None
+    for name in names:
+        query_cmd = contact_spci_cmd(query_cmd, get_dict.get(name))
+    return obj.query(query_cmd)
 
 
 def __check_endian(data, endian):

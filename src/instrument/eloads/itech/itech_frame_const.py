@@ -17,7 +17,7 @@ TUPLE_TRAN_MODE = (CONTINUOUS, PULSE, TOGGLE)
 TUPLE_VON_MODE = (LIVING, LATCH)
 
 
-class It85xxConst:
+class It85xxCmd:
 
     SUPPORTED_BAUDRATE_TUPLE = (4800, 9600, 19200, 38400)
     RW_DELAY_TUPLE = (0.03, 0.03, 0.03, 0.03)
@@ -159,14 +159,14 @@ class It85xxConst:
     }
 
 
-class It8500Const:
+class It8500Cmd:
     LOAD_VOLT_SET = 0x10            # 设置负载的带载电压值
     LOAD_VOLT_GET = 0x11            # 读取负载的带载电压值
     UNLOAD_VOLT_SET = 0x12          # 设置负载的卸载电压值
     UNLOAD_VOLT_SET = 0x13          # 读取负载的卸载电压值
 
 
-class It8500PlusConst:
+class It8500PlusCmd:
     HARDWARE_RANGE_GET = 0x01       # 取负载讯息(硬件量程参数)
     HP_POWER_SET = 0x02             # 设置硬件过功率保护值
     HP_POWER_GET = 0x03             # 读取硬件过功率保护值

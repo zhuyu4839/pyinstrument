@@ -1,10 +1,8 @@
 # -*- encoding: utf-8 -*-
 
 __all__ = {
-    'An97',
+    'An97Frame',
 }
-
-import warnings
 
 from constants import TUPLE_ON, TUPLE_OFF
 from instrument.frame import FrameInstrument
@@ -32,30 +30,13 @@ CMD_MODEL = 'RMO'  # 获取仪器型号信息
 CMD_VER = 'RVE'  # 获取仪器软件版本
 
 
-class An97(FrameInstrument):
+class An97Frame(FrameInstrument):
 
     def __init__(self, resource_name, address=1, baudrate=9600, timeout=0.15):
         super().__init__(resource_name, address, baudrate, timeout,
                          BAUDRATE_TUPLE, RW_DELAY_TUPLE)
         assert 0 < address < 255
         assert baudrate in self._supported_baudrate
-
-    # def initialize(self):
-    #     """
-    #     初始化, 即获取仪器型号和软件版本.
-    #     调用此方法后, 获取仪器的inst_info才可能不为None
-    #     :return: None
-    #     """
-    #     super().initialize()
-    #     self._info = self.idn()
-
-    def remote(self, on_off):
-        """
-        不支持
-        :param on_off: 开关参数, 可选值 {ON|1|OFF|0}
-        :return: None
-        """
-        warnings.warn('"remote" is not supported by ainuo an97 series')
 
     def idn(self):
         return '%s; %s' % (self._model(), self._version())
@@ -83,7 +64,7 @@ class An97(FrameInstrument):
         """
         设置输出电压频率等参数, 仅当电源在预置或运行状态下命令有效
         :param volt: 电压值, 范围 1.-300.
-        :param freq: 频率值, 范围 45.-65.
+        :param freq: 频率值, 范围 45.-65.以及400.
         :param upper: 电压波动上限值, 范围: 5.-30.
         :param lower: 电压波动下限值, 范围: 5.-30.
         :param group: 组, 范围: 0-6, 0表示没有组
