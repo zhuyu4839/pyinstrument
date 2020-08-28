@@ -25,10 +25,8 @@ class Md3058Scpi(ScpiInstrument):
         self.__cmdset = cmdset
 
     def initialize(self):
-        self.rst()
         self.write(CMD_SET, self.__cmdset)
-        self.cls()
-        self._info = self.idn()
+        super().initialize()
 
     def function(self, func_mode=None):
         """

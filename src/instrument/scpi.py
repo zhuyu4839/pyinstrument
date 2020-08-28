@@ -108,11 +108,12 @@ class ScpiInstrument(Instrument, ABC):
         """
         self.cls()
         self._info = self.idn()
-        self._logger.info(self.__str__())
+        self._logger.info('initialize instrument: %s', self.__str__())
         check = self.tst()
         if '0\n' != check:
             self._logger.warning('self-checking response non zero, value: %d', check)
 
+    # 以下为IEE488指令
     def cal(self):
         """
         校准命令(IEEE488标准)
@@ -232,7 +233,7 @@ class ScpiInstrument(Instrument, ABC):
         """
         self.write(Ieee488Cmd.TRG)
 
-    def tst(self):
+    def tst(self, delay=1):
         """
         自检测试
         :return: 自检测试状态, 非0为不通过, 具体查看仪器定义

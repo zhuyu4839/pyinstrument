@@ -16,7 +16,7 @@ SETTING = 'SETTING'  # 系统设置状态
 ERROR = 'ERROR'  # 错误状态
 
 BAUDRATE_TUPLE = (1200, 2400, 4800, 9600)
-RW_DELAY_TUPLE = (0.4, 0.3, 0.2, 0.14)
+RW_DELAY_TUPLE = (0.4, 0.3, 0.2, 0.14)      # 串口写和读取之间的延迟, 与波特率相关, 如果出现通讯超时, 修改对应延迟参数
 STATUS_TUPLE = (STANDBY, PRESET, RUN, SETTING, ERROR)
 COMMAND_RESULT_DICT = {'=': 'Success', '!': 'Invalid', '?': 'Unsupported'}
 

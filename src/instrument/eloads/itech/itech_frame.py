@@ -17,7 +17,7 @@ from instrument import utils
 from instrument.eloads.itech.itech import It85xx
 from instrument.frame import FrameInstrument
 from constants import TUPLE_ON, TUPLE_OFF
-from instrument.eloads.itech.itech_frame_const import *
+from .itech_frame_const import It85xxCmd, It8500Cmd, It8500PlusCmd
 
 
 class It8500Series(FrameInstrument, It85xx, ABC):
@@ -438,8 +438,8 @@ class It8500Series(FrameInstrument, It85xx, ABC):
             max_in_curr = utils.hex_to_value(data[11:15], magnif=10000)
             min_in_curr = utils.hex_to_value(data[15:19], magnif=10000)
             return in_volt, in_curr, in_power, operation_register, query_register, \
-                   temperature, work_mode, list_step, list_repeat, load_cap, rf_time, \
-                   remain_time, max_in_volt, min_in_volt, max_in_curr, min_in_curr
+                temperature, work_mode, list_step, list_repeat, load_cap, rf_time, \
+                remain_time, max_in_volt, min_in_volt, max_in_curr, min_in_curr
         else:
             return in_volt, in_curr, in_power, operation_register, query_register, \
                    temperature, work_mode, list_step, list_repeat

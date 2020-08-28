@@ -296,17 +296,15 @@ class It8500PlusCmd:
         CC: [CC_VOLT_UPPER_SET, ], CV: [CV_CURR_UPPER_SET, ],
         CW: [CW_VOLT_UPPER_SET, ], CR: [CR_VOLT_UPPER_SET, ],
     }
-
-    DICT_CM_LOWER_SET = {
-        CC: [CC_VOLT_LOWER_SET, ], CV: [CV_CURR_LOWER_SET, ],
-        CW: [CW_VOLT_LOWER_SET, ], CR: [CR_VOLT_LOWER_SET, ],
-    }
-
     DICT_CM_UPPER_GET = {
         CC: [CC_VOLT_UPPER_GET, ], CV: [CV_CURR_UPPER_GET, ],
         CW: [CW_VOLT_UPPER_GET, ], CR: [CR_VOLT_UPPER_GET, ],
     }
 
+    DICT_CM_LOWER_SET = {
+        CC: [CC_VOLT_LOWER_SET, ], CV: [CV_CURR_LOWER_SET, ],
+        CW: [CW_VOLT_LOWER_SET, ], CR: [CR_VOLT_LOWER_SET, ],
+    }
     DICT_CM_LOWER_GET = {
         CC: [CC_VOLT_LOWER_GET, ], CV: [CV_CURR_LOWER_GET, ],
         CW: [CW_VOLT_LOWER_GET, ], CR: [CR_VOLT_LOWER_GET, ],

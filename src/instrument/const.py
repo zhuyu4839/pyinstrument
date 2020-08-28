@@ -5,9 +5,11 @@
 @Author   blockish
 @Email    blockish@yeah.net
 """
+from re import IGNORECASE as IGNORE_CASE
 
 EMPTY = ''
 SPACE = ' '
+COMMAS = ','
 INTERROGATION = '?'
 
 BRACE = '{}'
