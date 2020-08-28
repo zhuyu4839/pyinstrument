@@ -3,7 +3,7 @@ from instrument import utils
 from instrument.const import SPACE, BRACE, INTERROGATION, COMMAS, IGNORE_CASE
 
 
-class Wt310eCmd:
+class Wt3xxeCmd:
 
     COMMUNICATE = 'COMM'
     HEADER = ':HEAD'

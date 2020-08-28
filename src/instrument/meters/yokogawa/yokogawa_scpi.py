@@ -5,15 +5,15 @@ from constants import TUPLE_ON_OFF
 from errors import InstrumentError
 from instrument import utils
 from instrument.const import Ieee488Cmd, EMPTY, COMMAS
-from .yokogawa_scpi_const import Wt310eCmd
+from .yokogawa_scpi_const import Wt3xxeCmd
 from instrument.scpi import ScpiInstrument
 
 __all__ = {
-    'Wt310eScpi',
+    'Wt3xxeScpi',
 }
 
 
-class Wt310eScpi(ScpiInstrument):
+class Wt3xxeScpi(ScpiInstrument):
     """
     for WT310E/WT310EH/WT332E/WT333E Digital Power Meter
     """
@@ -74,12 +74,12 @@ class Wt310eScpi(ScpiInstrument):
         """
         write_cmd = None
         for key, value in values.items():
-            write_cmd = utils.contact_spci_cmd(write_cmd, Wt310eCmd.DICT_COMMUNICATE_SET.get(key), value)
+            write_cmd = utils.contact_spci_cmd(write_cmd, Wt3xxeCmd.DICT_COMMUNICATE_SET.get(key), value)
         self.write(write_cmd)
 
         query_cmd = None
         for name in names:
-            query_cmd = utils.contact_spci_cmd(query_cmd, Wt310eCmd.DICT_COMMUNICATE_GET.get(name))
+            query_cmd = utils.contact_spci_cmd(query_cmd, Wt3xxeCmd.DICT_COMMUNICATE_GET.get(name))
         return self.query(query_cmd)
 
     # end of communicate group
@@ -117,14 +117,14 @@ class Wt310eScpi(ScpiInstrument):
             func = value.get('func')
             el = value.get('el')
             assert func is not None
-            write_cmd = utils.contact_spci_cmd(write_cmd, Wt310eCmd.DICT_DISPLAY_SET.get(key), func,
+            write_cmd = utils.contact_spci_cmd(write_cmd, Wt3xxeCmd.DICT_DISPLAY_SET.get(key), func,
                                                COMMAS if el is not None else EMPTY,
                                                el if el is not None else EMPTY)
         self.write(write_cmd)
 
         query_cmd = None
         for name in names:
-            query_cmd = utils.contact_spci_cmd(query_cmd, Wt310eCmd.DICT_DISPLAY_GET.get(name))
+            query_cmd = utils.contact_spci_cmd(query_cmd, Wt3xxeCmd.DICT_DISPLAY_GET.get(name))
         return self.query(query_cmd)
 
     def harmonics_group(self, *names, **values):
@@ -148,12 +148,12 @@ class Wt310eScpi(ScpiInstrument):
         """
         write_cmd = None
         for key, value in values.items():
-            write_cmd = utils.contact_spci_cmd(write_cmd, Wt310eCmd.DICT_HARMONIC_SET.get(key), value)
+            write_cmd = utils.contact_spci_cmd(write_cmd, Wt3xxeCmd.DICT_HARMONIC_SET.get(key), value)
         self.write(write_cmd)
 
         query_cmd = None
         for name in names:
-            query_cmd = utils.contact_spci_cmd(query_cmd, Wt310eCmd.DICT_HARMONIC_GET.get(name))
+            query_cmd = utils.contact_spci_cmd(query_cmd, Wt3xxeCmd.DICT_HARMONIC_GET.get(name))
         return self.query(query_cmd)
 
     def hold(self, on_off=None):
@@ -194,11 +194,11 @@ class Wt310eScpi(ScpiInstrument):
         """
         write_cmd = None
         for key, value in values.items():
-            write_cmd = utils.contact_spci_cmd(write_cmd, Wt310eCmd.DICT_INPUT_VOLTAGE_SET.get(key), value)
+            write_cmd = utils.contact_spci_cmd(write_cmd, Wt3xxeCmd.DICT_INPUT_VOLTAGE_SET.get(key), value)
 
         query_cmd = None
         for name in names:
-            query_cmd = utils.contact_spci_cmd(query_cmd, Wt310eCmd.DICT_INPUT_VOLTAGE_GET.get(name))
+            query_cmd = utils.contact_spci_cmd(query_cmd, Wt3xxeCmd.DICT_INPUT_VOLTAGE_GET.get(name))
         return self.query(query_cmd)
 
     def input_current(self, *names, **values):
@@ -259,12 +259,12 @@ class Wt310eScpi(ScpiInstrument):
         """
         write_cmd = None
         for key, value in values:
-            write_cmd = utils.contact_spci_cmd(write_cmd, Wt310eCmd.DICT_INPUT_CURRENT_SET.get(key), value)
+            write_cmd = utils.contact_spci_cmd(write_cmd, Wt3xxeCmd.DICT_INPUT_CURRENT_SET.get(key), value)
         self.write(write_cmd)
 
         query_cmd = None
         for name in names:
-            query_cmd = utils.contact_spci_cmd(query_cmd, Wt310eCmd.DICT_INPUT_CURRENT_GET.get(name))
+            query_cmd = utils.contact_spci_cmd(query_cmd, Wt3xxeCmd.DICT_INPUT_CURRENT_GET.get(name))
         return self.query(query_cmd)
 
     def input_scaling(self, *names, **values):
@@ -316,12 +316,12 @@ class Wt310eScpi(ScpiInstrument):
         """
         write_cmd = None
         for key, value in values:
-            write_cmd = utils.contact_spci_cmd(write_cmd, Wt310eCmd.DICT_INPUT_SCALING_SET.get(key), value)
+            write_cmd = utils.contact_spci_cmd(write_cmd, Wt3xxeCmd.DICT_INPUT_SCALING_SET.get(key), value)
         self.write(write_cmd)
 
         query_cmd = None
         for name in names:
-            query_cmd = utils.contact_spci_cmd(query_cmd, Wt310eCmd.DICT_INPUT_SCALING_GET.get(name))
+            query_cmd = utils.contact_spci_cmd(query_cmd, Wt3xxeCmd.DICT_INPUT_SCALING_GET.get(name))
         return self.query(query_cmd)
 
     def input_filter(self, **values):
@@ -337,7 +337,7 @@ class Wt310eScpi(ScpiInstrument):
         """
         write_cmd = None
         for key, value in values:
-            write_cmd = utils.contact_spci_cmd(write_cmd, Wt310eCmd.DICT_INPUT_FILTER_SET.get(key), value)
+            write_cmd = utils.contact_spci_cmd(write_cmd, Wt3xxeCmd.DICT_INPUT_FILTER_SET.get(key), value)
         self.write(write_cmd)
 
         return self.query(':INPut:FILTer?')
@@ -385,12 +385,12 @@ class Wt310eScpi(ScpiInstrument):
         """
         write_cmd = None
         for key, value in values:
-            write_cmd = utils.contact_spci_cmd(write_cmd, Wt310eCmd.DICT_INPUT_OTHERS_SET.get(key), value)
+            write_cmd = utils.contact_spci_cmd(write_cmd, Wt3xxeCmd.DICT_INPUT_OTHERS_SET.get(key), value)
         self.write(write_cmd)
 
         query_cmd = None
         for name in names:
-            query_cmd = utils.contact_spci_cmd(query_cmd, Wt310eCmd.DICT_INPUT_OTHERS_GET.get(name))
+            query_cmd = utils.contact_spci_cmd(query_cmd, Wt3xxeCmd.DICT_INPUT_OTHERS_GET.get(name))
         return self.query(query_cmd)
 
     # start integrate
@@ -415,30 +415,30 @@ class Wt310eScpi(ScpiInstrument):
         write_cmd = None
         mode = values.get('mode', None)
         if mode is not None:
-            write_cmd = utils.contact_spci_cmd(write_cmd, Wt310eCmd.DICT_INTEGRATE_SET.get('mode'), mode)
+            write_cmd = utils.contact_spci_cmd(write_cmd, Wt3xxeCmd.DICT_INTEGRATE_SET.get('mode'), mode)
         timer = values.get('timer', None)
         if timer is not None:
             assert isinstance(timer, dict), 'timer must be a dict'
-            write_cmd = utils.contact_spci_cmd(write_cmd, Wt310eCmd.DICT_INTEGRATE_SET.get('timer'),
+            write_cmd = utils.contact_spci_cmd(write_cmd, Wt3xxeCmd.DICT_INTEGRATE_SET.get('timer'),
                                                timer.get('hour', 0), timer.get('minute', 0), timer.get('second', 0))
         state = values.get('state', None)
         if state is not None:
             if 'start' == state:
-                write_cmd = utils.contact_spci_cmd(write_cmd, Wt310eCmd.DICT_INTEGRATE.get('start'))
+                write_cmd = utils.contact_spci_cmd(write_cmd, Wt3xxeCmd.DICT_INTEGRATE.get('start'))
             elif 'stop' == state:
-                write_cmd = utils.contact_spci_cmd(write_cmd, Wt310eCmd.DICT_INTEGRATE.get('stop'))
+                write_cmd = utils.contact_spci_cmd(write_cmd, Wt3xxeCmd.DICT_INTEGRATE.get('stop'))
             elif 'reset' == state:
-                write_cmd = utils.contact_spci_cmd(write_cmd, Wt310eCmd.DICT_INTEGRATE.get('reset'))
+                write_cmd = utils.contact_spci_cmd(write_cmd, Wt3xxeCmd.DICT_INTEGRATE.get('reset'))
             else:
                 self._logger.warn('the state "%s" expect "start", "stop" or "reset"', state)
         self.write(write_cmd)
         query_cmd = None
         if 'mode' in names:
-            query_cmd = utils.contact_spci_cmd(query_cmd, Wt310eCmd.DICT_INTEGRATE.get('mode'))
+            query_cmd = utils.contact_spci_cmd(query_cmd, Wt3xxeCmd.DICT_INTEGRATE.get('mode'))
         if 'timer' in names:
-            query_cmd = utils.contact_spci_cmd(query_cmd, Wt310eCmd.DICT_INTEGRATE.get('timer'))
+            query_cmd = utils.contact_spci_cmd(query_cmd, Wt3xxeCmd.DICT_INTEGRATE.get('timer'))
         if 'state' in names:
-            query_cmd = utils.contact_spci_cmd(query_cmd, Wt310eCmd.DICT_INTEGRATE.get('state'))
+            query_cmd = utils.contact_spci_cmd(query_cmd, Wt3xxeCmd.DICT_INTEGRATE.get('state'))
         return self.query(query_cmd)
 
     # def mode(self, mode=None):
@@ -449,8 +449,8 @@ class Wt310eScpi(ScpiInstrument):
     #         (type str) 集成模式
     #     """
     #     if mode is not None:
-    #         self.write(Wt310eCmd.DICT_INTEGRATE_SET.get('mode'), mode)
-    #     return self.query(Wt310eCmd.DICT_INTEGRATE.get('mode'))
+    #         self.write(Wt3xxeCmd.DICT_INTEGRATE_SET.get('mode'), mode)
+    #     return self.query(Wt3xxeCmd.DICT_INTEGRATE.get('mode'))
     #
     # def timer(self, hour=None, minute=None, second=None):
     #     """
@@ -464,11 +464,11 @@ class Wt310eScpi(ScpiInstrument):
     #     if hour is not None \
     #             or minute is not None \
     #             or second is not None:
-    #         self.write(self.write(Wt310eCmd.DICT_INTEGRATE_SET.get('timer'),
+    #         self.write(self.write(Wt3xxeCmd.DICT_INTEGRATE_SET.get('timer'),
     #                                 0 if hour is None else hour,
     #                                 0 if minute is None else minute,
     #                                 0 if second is None else second))
-    #     return self.query(Wt310eCmd.DICT_INTEGRATE.get('timer'))
+    #     return self.query(Wt3xxeCmd.DICT_INTEGRATE.get('timer'))
     #
     # def start(self):
     #     """
@@ -476,7 +476,7 @@ class Wt310eScpi(ScpiInstrument):
     #     return:
     #         None
     #     """
-    #     self.write(Wt310eCmd.DICT_INTEGRATE.get('start'))
+    #     self.write(Wt3xxeCmd.DICT_INTEGRATE.get('start'))
     #
     # def stop(self):
     #     """
@@ -484,7 +484,7 @@ class Wt310eScpi(ScpiInstrument):
     #     return:
     #         None
     #     """
-    #     self.write(Wt310eCmd.DICT_INTEGRATE.get('stop'))
+    #     self.write(Wt3xxeCmd.DICT_INTEGRATE.get('stop'))
     #
     # def reset(self):
     #     """
@@ -492,7 +492,7 @@ class Wt310eScpi(ScpiInstrument):
     #     return:
     #         None
     #     """
-    #     self.write(Wt310eCmd.DICT_INTEGRATE.get('reset'))
+    #     self.write(Wt3xxeCmd.DICT_INTEGRATE.get('reset'))
     #
     # def state(self):
     #     """
@@ -500,7 +500,7 @@ class Wt310eScpi(ScpiInstrument):
     #     return:
     #         the integration status.
     #     """
-    #     return self.query(Wt310eCmd.DICT_INTEGRATE.get('state'))
+    #     return self.query(Wt3xxeCmd.DICT_INTEGRATE.get('state'))
     # end of integrate
 
     def math(self, equation=None):
@@ -528,7 +528,7 @@ class Wt310eScpi(ScpiInstrument):
         """
         write_cmd = None
         for key, value in values.items():
-            write_cmd = utils.contact_spci_cmd(write_cmd, Wt310eCmd.DICT_MEASURE_SET.get(key), value)
+            write_cmd = utils.contact_spci_cmd(write_cmd, Wt3xxeCmd.DICT_MEASURE_SET.get(key), value)
         self.write(write_cmd)
 
         return self.query(':MEASure?')
@@ -548,9 +548,9 @@ class Wt310eScpi(ScpiInstrument):
         @return:
             格式化数据, 注意后面的换行字符'\n'
         """
-        if Wt310eCmd.REGEX_NUMERIC_FORMAT.match(fmt) is not None:
-            self.write(Wt310eCmd.DICT_NUMERIC_SET.get('fmt'), fmt)
-        return self.query(Wt310eCmd.DICT_NUMERIC_GET.get('fmt'))
+        if Wt3xxeCmd.REGEX_NUMERIC_FORMAT.match(fmt) is not None:
+            self.write(Wt3xxeCmd.DICT_NUMERIC_SET.get('fmt'), fmt)
+        return self.query(Wt3xxeCmd.DICT_NUMERIC_GET.get('fmt'))
 
     def numeric_normal(self, *names, **values):
         """
@@ -584,12 +584,12 @@ class Wt310eScpi(ScpiInstrument):
         """
         write_cmd = None
         for key, value in values.items():
-            write_cmd = utils.contact_spci_cmd(write_cmd, Wt310eCmd.DICT_NUMERIC_NORMAL_SET.get(key), value)
+            write_cmd = utils.contact_spci_cmd(write_cmd, Wt3xxeCmd.DICT_NUMERIC_NORMAL_SET.get(key), value)
         self.write(write_cmd)
 
         query_cmd = None
         for name in names:
-            query_cmd = utils.contact_spci_cmd(query_cmd, Wt310eCmd.DICT_NUMERIC_NORMAL_GET.get(name))
+            query_cmd = utils.contact_spci_cmd(query_cmd, Wt3xxeCmd.DICT_NUMERIC_NORMAL_GET.get(name))
         return self.query(query_cmd)
 
     def numeric_normal_value(self, nrf=1):
@@ -600,8 +600,8 @@ class Wt310eScpi(ScpiInstrument):
             数字数据头和数据值, 以分号(;)分割, 注意后面的换行字符'\n'
         """
         # return self.query(':NUMeric:NORMal:HEADer? {};:NUMeric:NORMal:VALue? {}'.format(nrf, nrf))
-        return self.query(utils.contact_spci_cmd(Wt310eCmd.DICT_NUMERIC_NORMAL_GET.get('header').format(nrf),
-                                                 Wt310eCmd.DICT_NUMERIC_NORMAL_GET.get('value').format(nrf)))
+        return self.query(utils.contact_spci_cmd(Wt3xxeCmd.DICT_NUMERIC_NORMAL_GET.get('header').format(nrf),
+                                                 Wt3xxeCmd.DICT_NUMERIC_NORMAL_GET.get('value').format(nrf)))
 
     def numeric_list(self, *names, **values):
         """
@@ -640,12 +640,12 @@ class Wt310eScpi(ScpiInstrument):
         """
         write_cmd = None
         for key, value in values.items():
-            write_cmd = utils.contact_spci_cmd(write_cmd, Wt310eCmd.DICT_NUMERIC_LIST_SET.get(key), value)
+            write_cmd = utils.contact_spci_cmd(write_cmd, Wt3xxeCmd.DICT_NUMERIC_LIST_SET.get(key), value)
         self.write(write_cmd)
 
         query_cmd = None
         for name in names:
-            query_cmd = utils.contact_spci_cmd(query_cmd, Wt310eCmd.DICT_NUMERIC_LIST_GET.get(name))
+            query_cmd = utils.contact_spci_cmd(query_cmd, Wt3xxeCmd.DICT_NUMERIC_LIST_GET.get(name))
         return self.query(query_cmd)
 
     def numeric_list_value(self, nrf=1):
@@ -655,7 +655,7 @@ class Wt310eScpi(ScpiInstrument):
         @return:
             谐波测量数值列表数据, 注意后面的换行字符'\n'
         """
-        return self.query(Wt310eCmd.DICT_NUMERIC_LIST_GET.get('value'), nrf)
+        return self.query(Wt3xxeCmd.DICT_NUMERIC_LIST_GET.get('value'), nrf)
 
     def numeric_hold(self, on_off=None):
         """
@@ -665,8 +665,8 @@ class Wt310eScpi(ScpiInstrument):
             数字数据保持功能的开/关(保持/释放)状态, 注意后面的换行字符'\n'
         """
         if on_off in TUPLE_ON_OFF:
-            self.write(Wt310eCmd.DICT_NUMERIC_SET.get('hold'), on_off)
-        return self.query(Wt310eCmd.DICT_NUMERIC_GET.get('hold'))
+            self.write(Wt3xxeCmd.DICT_NUMERIC_SET.get('hold'), on_off)
+        return self.query(Wt3xxeCmd.DICT_NUMERIC_GET.get('hold'))
 
     def rate_group(self, *names, **values):
         """
@@ -687,12 +687,12 @@ class Wt310eScpi(ScpiInstrument):
         """
         write_cmd = None
         for key, value in values.items():
-            write_cmd = utils.contact_spci_cmd(write_cmd, Wt310eCmd.DICT_RATE_SET.get(key), value)
+            write_cmd = utils.contact_spci_cmd(write_cmd, Wt3xxeCmd.DICT_RATE_SET.get(key), value)
         self.write(write_cmd)
 
         query_cmd = None
         for name in names:
-            query_cmd = utils.contact_spci_cmd(query_cmd, Wt310eCmd.DICT_RATE_GET.get(name))
+            query_cmd = utils.contact_spci_cmd(query_cmd, Wt3xxeCmd.DICT_RATE_GET.get(name))
         return self.query(query_cmd)
 
     # def recall_group(self, normal_block, list_block, *names, **values):
@@ -760,12 +760,12 @@ class Wt310eScpi(ScpiInstrument):
         """
         write_cmd = None
         for key, value in values:
-            write_cmd = utils.contact_spci_cmd(Wt310eCmd.DICT_STATUS_SET.get(key), value)
+            write_cmd = utils.contact_spci_cmd(Wt3xxeCmd.DICT_STATUS_SET.get(key), value)
         self.write(write_cmd)
 
         query_cmd = None
         for name in names:
-            query_cmd = utils.contact_spci_cmd(Wt310eCmd.DICT_STATUS_GET.get(name))
+            query_cmd = utils.contact_spci_cmd(Wt3xxeCmd.DICT_STATUS_GET.get(name))
         return self.query(query_cmd)
 
     def store_state(self, on_off):
@@ -776,8 +776,8 @@ class Wt310eScpi(ScpiInstrument):
             存储开/关状态, 注意后面的换行字符'\n'
         """
         if on_off in TUPLE_ON_OFF:
-            self.write(Wt310eCmd.DICT_STORE_SET.get('state'), on_off)
-        return self.query(Wt310eCmd.DICT_STORE_GET.get('state'))
+            self.write(Wt3xxeCmd.DICT_STORE_SET.get('state'), on_off)
+        return self.query(Wt3xxeCmd.DICT_STORE_GET.get('state'))
 
     def store_interval(self, hour=None, minute=None, second=None):
         """
@@ -791,11 +791,11 @@ class Wt310eScpi(ScpiInstrument):
         if hour is not None \
                 or minute is not None \
                 or second is not None:
-            self.write(self.write(Wt310eCmd.DICT_STORE_SET.get('interval'),
+            self.write(self.write(Wt3xxeCmd.DICT_STORE_SET.get('interval'),
                                   0 if hour is None else hour,
                                   0 if minute is None else minute,
                                   0 if second is None else second))
-        return self.query(Wt310eCmd.DICT_STORE_GET.get('interval'))
+        return self.query(Wt3xxeCmd.DICT_STORE_GET.get('interval'))
 
     def store_panel(self, nrf=1):
         """
@@ -804,7 +804,7 @@ class Wt310eScpi(ScpiInstrument):
         @return:
             None
         """
-        self.write(Wt310eCmd.DICT_STORE_SET.get('panel'), nrf)
+        self.write(Wt3xxeCmd.DICT_STORE_SET.get('panel'), nrf)
 
     def system_group(self, *names, **values):
         """
@@ -830,11 +830,11 @@ class Wt310eScpi(ScpiInstrument):
         """
         write_cmd = None
         for key, value in values.items():
-            write_cmd = utils.contact_spci_cmd(write_cmd, Wt310eCmd.DICT_SYSTEM_SET.get(key), value)
+            write_cmd = utils.contact_spci_cmd(write_cmd, Wt3xxeCmd.DICT_SYSTEM_SET.get(key), value)
         self.write(write_cmd)
 
         query_cmd = None
         for name in names:
-            query_cmd = utils.contact_spci_cmd(query_cmd, Wt310eCmd.DICT_SYSTEM_GET.get(name))
+            query_cmd = utils.contact_spci_cmd(query_cmd, Wt3xxeCmd.DICT_SYSTEM_GET.get(name))
         return self.query(query_cmd)
 
