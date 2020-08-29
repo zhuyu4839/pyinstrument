@@ -965,7 +965,7 @@ class Mdo3000Scpi(ScpiInstrument):
         for i in range(_data_len - x):
             data_i = data[i + x]
             data_x.append(x_zero + x_incr * i)
-            data_y.append(y_zero + y_mult * Mdo3000Cmd.COMPLEMENT[data_i])
+            data_y.append(y_zero + y_mult * COMPLEMENT[data_i])
         self._logger.info('data x size: %d', len(data_x))
         self._logger.info('data y size: %d', len(data_y))
 
