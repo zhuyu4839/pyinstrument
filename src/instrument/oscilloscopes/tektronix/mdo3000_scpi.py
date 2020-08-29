@@ -15,8 +15,8 @@ __all__ = {
 
 
 def ch_trans(ch):
-    if ch in Mdo3000Cmd.CHANNEL_COLOR_DICT:
-        ch = Mdo3000Cmd.CHANNEL_COLOR_DICT.get(ch)
+    if ch in CHANNEL_COLOR_DICT:
+        ch = CHANNEL_COLOR_DICT.get(ch)
     else:
         ch = "".join(list(filter(str.isdigit, ch)))
     return ch
