@@ -19,7 +19,7 @@ TUPLE_VON_MODE = (LIVING, LATCH)
 
 class It85xxCmd:
 
-    SUPPORTED_BAUDRATE_TUPLE = (4800, 9600, 19200, 38400)
+    BAUDRATE_TUPLE = (4800, 9600, 19200, 38400)
     RW_DELAY_TUPLE = (0.03, 0.03, 0.03, 0.03)
 
     # 85XX系列电子负载命令格式
@@ -90,7 +90,7 @@ class It85xxCmd:
     FLO_TIMER_SET = 0x50            # 设置负载的 FOR LOAD ON 定时器时间值
     FLO_TIMER_GET = 0x51            # 读取负载的 FOR LOAD ON 定时器时间值
     FLO_STATUS_SET = 0x52           # 设置负载的 FOR LOAD ON 定时器状态
-    FLO_STATUS_SET = 0x53           # 读取负载的 FOR LOAD ON 定时器状态
+    FLO_STATUS_GET = 0x53           # 读取负载的 FOR LOAD ON 定时器状态
     # ********************************************************* #
     ADDR_SET = 0x54                 # 设置负载的新通讯地址
     # 设置是否允许 LOCAL 键使用，若 LOCAL 键允许使用，则负载在 REMOTE 操作模式时，用户可以按面板上的SHIFT+LOCAL 键使负载返回到 LOCAL 操作模式
@@ -163,7 +163,7 @@ class It8500Cmd:
     LOAD_VOLT_SET = 0x10            # 设置负载的带载电压值
     LOAD_VOLT_GET = 0x11            # 读取负载的带载电压值
     UNLOAD_VOLT_SET = 0x12          # 设置负载的卸载电压值
-    UNLOAD_VOLT_SET = 0x13          # 读取负载的卸载电压值
+    UNLOAD_VOLT_GET = 0x13          # 读取负载的卸载电压值
 
 
 class It8500PlusCmd:

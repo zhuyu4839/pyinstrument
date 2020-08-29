@@ -1,2 +1,2 @@
 # -*- encoding: utf-8 -*-
-from .yokogawa_scpi import Wt310eScpi
+from .yokogawa_scpi import Wt300eScpi

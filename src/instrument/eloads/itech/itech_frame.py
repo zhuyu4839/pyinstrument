@@ -17,15 +17,15 @@ from instrument import utils
 from instrument.eloads.itech.itech import It85xx
 from instrument.frame import FrameInstrument
 from constants import TUPLE_ON, TUPLE_OFF
-from .itech_frame_const import It85xxCmd, It8500Cmd, It8500PlusCmd
+from .itech_frame_const import *
 
 
 class It8500Series(FrameInstrument, It85xx, ABC):
 
     def __init__(self, resource_name, address=0, baudrate=9600, timeout=0.1):
         assert 0 <= address < 32 or address == 0xff
-        assert baudrate in It85xxCmd.SUPPORTED_BAUDRATE_TUPLE
-        super().__init__(resource_name, address, baudrate, timeout, It85xxCmd.SUPPORTED_BAUDRATE_TUPLE,
+        assert baudrate in It85xxCmd.BAUDRATE_TUPLE
+        super().__init__(resource_name, address, baudrate, timeout, It85xxCmd.BAUDRATE_TUPLE,
                          It85xxCmd.RW_DELAY_TUPLE)
 
     def write(self, cmd: list, queryable: bool = False) -> None:
