@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 """
-@File    : itech.py
+@File    : it8500.py
 @Time    : 2020/8/17 11:58
 @Author  : blockish
 @Email   : blockish@yeah.net

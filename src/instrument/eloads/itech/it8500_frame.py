@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 """
-@File    : itech_frame.py
+@File    : it8500_frame.py
 @Time    : 2020/8/6 21:23
 @Author  : blockish
 @Email   : blockish@yeah.net
@@ -14,10 +14,10 @@ from abc import ABC
 
 from errors import ParamException, InstrumentException
 from instrument import utils
-from instrument.eloads.itech.itech import It85xx
+from instrument.eloads.itech.it8500 import It85xx
 from instrument.frame import FrameInstrument
 from constants import TUPLE_ON, TUPLE_OFF
-from .itech_frame_const import *
+from .it8500_frame_const import *
 
 
 class It8500Series(FrameInstrument, It85xx, ABC):

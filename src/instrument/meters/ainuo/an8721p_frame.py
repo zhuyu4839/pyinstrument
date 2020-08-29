@@ -3,7 +3,7 @@ from constants import TUPLE_ON, TUPLE_OFF, ON
 from errors import ParamException
 from instrument import utils
 from instrument.frame import FrameInstrument
-from .ainuo_const import An8721pCmd
+from .an8721p_const import An8721pCmd
 
 __all__ = {
     'An8721pFrame',

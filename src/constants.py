@@ -11,6 +11,9 @@ OFF = 'OFF'
 ONE = '1'
 ZERO = '0'
 
+RUN = 'run'
+STOP = 'stop'
+
 TUPLE_ON = (ON, ONE)
 TUPLE_OFF = (OFF, ZERO)
 TUPLE_ON_OFF = (*TUPLE_ON, * TUPLE_OFF)

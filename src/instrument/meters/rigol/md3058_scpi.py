@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 """
-@File    : rigol_scpi.py
+@File    : md3058_scpi.py
 @Time    : 2020/7/31 12:02
 @Author  : blockish
 @Email   : blockish@yeah.net
@@ -10,7 +10,7 @@ __all__ = {
 }
 
 from instrument import utils
-from instrument.meters.rigol.rigol_scpi_const import *
+from instrument.meters.rigol.md3058_scpi_const import *
 from instrument.scpi import ScpiInstrument
 
 

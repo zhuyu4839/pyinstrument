@@ -5,7 +5,7 @@ from constants import TUPLE_ON_OFF
 from errors import InstrumentError
 from instrument import utils
 from instrument.const import Ieee488Cmd, EMPTY, COMMAS
-from .yokogawa_scpi_const import Wt300eCmd
+from .wt300e_scpi_const import Wt300eCmd
 from instrument.scpi import ScpiInstrument
 
 __all__ = {

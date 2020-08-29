@@ -1,5 +1,8 @@
 import abc
 
+from errors import ParamException
+from instrument import utils
+
 
 class A(metaclass=abc.ABCMeta):
 
@@ -16,12 +19,18 @@ class B(A):
     def __init__(self):
         pass
 
-    def call(self):
-        print('call')
+    def call(self, s):
+        def ma():
+            print('a')
+
+        def mb():
+            print('b')
+        switch = {'a': ma, 'b': mb}
+        return switch.get(s, lambda: utils.raiser(ParamException()))
 
 
 # a = A()
 b = B()
 # print(a.__class__.__name__)
-print(B.__class__)
+b.call('c')()
 
