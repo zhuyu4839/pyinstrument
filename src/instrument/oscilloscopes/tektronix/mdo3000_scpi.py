@@ -937,7 +937,7 @@ class Mdo3000Scpi(ScpiInstrument):
 
         # data start of '#' ascii is 0x23
         data_start = data[0]
-        assert 0x23 != data_start, 'error start of data'
+        assert 0x23 == data_start, 'error start of data'
 
         # numbers of data length ascii  - ascii(0)
         data_len_num = data[1] - 0x30
